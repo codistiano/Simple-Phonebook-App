@@ -1,14 +1,17 @@
 const express = require("express");
 const morgan = require("morgan");
+const dotenv = require("dotenv");
 const app = express();
 
+dotenv.config();
+
 app.use(express.json());
-app.use(morgan(":method :url :status - :response-time ms :body"))
-app.use(express.static("dist"))
+app.use(morgan(":method :url :status - :response-time ms :body"));
+app.use(express.static("dist"));
 
 morgan.token("body", (req, res) => {
-    return JSON.stringify(req.body);
-})
+  return JSON.stringify(req.body);
+});
 
 const persons = [
   {
