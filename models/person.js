@@ -12,8 +12,21 @@ mongoose
   });
 
 const personSchema = new mongoose.Schema({
-  name: String,
-  phone: String,
+  name: {
+    type: String,
+    minLength: 3,
+    required: true,
+  },
+  phone: {
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /\d{1,3}-\d{6,8}/.test(v);
+      },
+      message: props => `${props.value} is not a valid phone number!`
+    }, 
+    minLength: 8,
+  },
 });
 
 module.exports = mongoose.model("Person", personSchema);
